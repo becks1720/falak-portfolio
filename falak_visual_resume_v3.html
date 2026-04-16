@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Falak — Visual Resume</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0812;
+    --surface: #100f1e;
+    --card: rgba(22,20,40,0.85);
+    --border: rgba(180,160,220,0.18);
+    --accent: #9b7fe8;
+    --accent2: #c4a8f0;
+    --accent3: #6c4ab8;
+    --text: #e8e0f8;
+    --muted: #9080b8;
+    --soft: rgba(155,127,232,0.12);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== TOP HEADER ===== */
+  .top-bar {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 28px;
+    background: linear-gradient(90deg, #0f0d20, #1a1030);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .char-mini {
+    width: 64px;
+    height: 88px;
+    flex-shrink: 0;
+  }
+
+  .header-info { flex: 1; }
+  .header-info h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem;
+    font-weight: 600;
+    background: linear-gradient(120deg, #fff 0%, #d4b8ff 55%, #a78bfa 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    line-height: 1;
+  }
+  .header-info .sub {
+    font-size: .78rem;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: .05em;
+  }
+  .header-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .hbadge {
+    font-size: .7rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(155,127,232,0.15);
+    border: 1px solid rgba(155,127,232,0.3);
+    color: var(--accent2);
+  }
+  .gpa-hbadge {
+    background: linear-gradient(135deg,#5a28b8,#9b6be8);
+    border: none;
+    color: white;
+    font-weight: 600;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .main-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 28px 48px;
+  }
+
+  .resume-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .full-width { grid-column: 1 / -1; }
+
+  @media(max-width: 700px) {
+    .resume-grid { grid-template-columns: 1fr; }
+    .full-width { grid-column: 1; }
+  }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .25s, transform .2s;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top:0; left:0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg,#9b6be8,#4a1fa8);
+    border-radius: 3px 0 0 3px;
+  }
+  .card:hover { border-color: rgba(155,107,232,0.4); transform: translateY(-2px); }
+  .card-title { font-weight: 600; font-size: .95rem; color: #e8d8ff; margin-bottom: 3px; }
+  .card-sub { font-size: .78rem; color: var(--accent); margin-bottom: 8px; font-weight: 500; }
+  .card-body { font-size: .82rem; color: #b8a8d8; line-height: 1.75; }
+  .card-body li { list-style:none; padding-left:14px; position:relative; margin-bottom:3px; }
+  .card-body li::before { content:'◆'; position:absolute; left:0; color:#7c3aed; font-size:6px; top:5px; }
+
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--accent2);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(155,127,232,0.4), transparent);
+    margin-left: 4px;
+  }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .contact-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border-color .25s;
+  }
+  .contact-card:hover { border-color: rgba(155,107,232,0.4); }
+  .contact-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(124,58,237,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .contact-text .label { font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+  .contact-text .val { font-size: .82rem; color: var(--text); margin-top: 1px; word-break: break-all; }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+  .skill-pill {
+    background: linear-gradient(135deg,rgba(74,31,168,0.35),rgba(155,107,232,0.15));
+    border: 1px solid rgba(155,107,232,0.3);
+    border-radius: 10px;
+    padding: 10px 12px;
+    text-align: center;
+    font-size: .78rem;
+    color: #d4b8ff;
+    transition: all .2s;
+  }
+  .skill-pill:hover { background: linear-gradient(135deg,rgba(124,58,237,0.45),rgba(168,85,247,0.25)); border-color:rgba(168,85,247,0.55); transform:scale(1.04); }
+
+  /* LANGUAGES */
+  .lang-row { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+  .lang-label { min-width:60px; font-size:.85rem; color:#d4b8ff; font-weight:500; }
+  .lang-bar-bg { flex:1; height:7px; background:rgba(255,255,255,0.08); border-radius:8px; overflow:hidden; }
+  .lang-bar-fill { height:100%; border-radius:8px; background:linear-gradient(90deg,#4a1fa8,#9b6be8); width:0; transition:width 1.2s ease-out; }
+  .lang-tag { font-size:.72rem; color:var(--accent); min-width:50px; text-align:right; }
+
+  /* CERTS / ACTIVITIES */
+  .chip {
+    display: inline-block;
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(155,107,232,0.25);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: .75rem;
+    color: #c4a8f0;
+    margin: 4px 4px 0 0;
+    transition: all .2s;
+  }
+  .chip:hover { background: rgba(124,58,237,0.3); border-color: rgba(155,107,232,0.5); }
+
+  /* EDU */
+  .edu-card {
+    background: linear-gradient(135deg,rgba(74,31,168,0.25),rgba(26,8,60,0.85));
+    border: 1px solid rgba(155,107,232,0.35);
+    border-radius: 16px;
+    padding: 22px 24px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .edu-logo {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg,#4a1fa8,#9b6be8);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+  }
+  .edu-info h3 { font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:#e8d8ff; margin-bottom:4px; }
+  .edu-info p { font-size:.8rem; color:var(--accent); margin-bottom:8px; }
+  .gpa-badge {
+    display: inline-block;
+    background: linear-gradient(135deg,#6b28b0,#a855f7);
+    border-radius: 10px;
+    padding: 4px 12px;
+    font-size: .78rem;
+    font-weight: 600;
+    color: white;
+  }
+
+  /* two-col layout for experience */
+  .exp-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media(max-width:620px){ .exp-cols { grid-template-columns:1fr; } }
+
+  /* Stars background */
+  .stars-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .star { position:absolute; border-radius:50%; background:rgba(255,255,255,0.7); animation:twinkle 3s infinite; }
+  @keyframes twinkle { 0%,100%{opacity:.2;transform:scale(1)} 50%{opacity:.9;transform:scale(1.4)} }
+
+  /* Hair sway & float animations */
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+  @keyframes hairSway { 0%,100%{transform:skewX(0deg)} 50%{transform:skewX(1deg)} }
+  @keyframes blink { 0%,90%,100%{transform:scaleY(1)} 94%{transform:scaleY(0.05)} }
+  @keyframes sparkle { 0%,100%{opacity:.3;transform:scale(0.8) rotate(0deg)} 50%{opacity:1;transform:scale(1.2) rotate(20deg)} }
+
+  .char-float-mini { animation: float 4s ease-in-out infinite; }
+  .hair-sway { animation: hairSway 5s ease-in-out infinite; }
+  .eye-blink { animation: blink 5s ease-in-out infinite; }
+  .sparkle-anim { animation: sparkle 2.5s ease-in-out infinite; }
+
+  /* scrollbar */
+  .panel::-webkit-scrollbar { width: 3px; }
+</style>
+</head>
+<body>
+
+<div class="stars-bg" id="stars"></div>
+
+<!-- TOP HEADER -->
+<div class="top-bar">
+  <!-- Compact anime character -->
+  <svg class="char-mini char-float-mini" viewBox="0 0 64 92" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="fG" cx="50%" cy="35%" r="60%">
+        <stop offset="0%" stop-color="#f0d8c8"/>
+        <stop offset="100%" stop-color="#ddb898"/>
+      </radialGradient>
+    </defs>
+    <!-- body white shirt -->
+    <rect x="22" y="46" width="20" height="22" rx="4" fill="#e8e8e8"/>
+    <path d="M28 46 Q32 52 36 46" fill="none" stroke="#ccc" stroke-width="1"/>
+    <!-- skirt -->
+    <path d="M21 64 Q18 80 17 90 Q32 94 47 90 Q46 80 43 64 Z" fill="#d0d0d8"/>
+    <!-- arms -->
+    <path d="M22 52 Q14 60 12 68" stroke="#ddb898" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M42 52 Q50 46 54 40" stroke="#ddb898" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <!-- neck -->
+    <rect x="29" y="37" width="6" height="8" rx="3" fill="#e4c0a0"/>
+    <!-- face -->
+    <ellipse cx="32" cy="26" rx="12" ry="13" fill="url(#fG)"/>
+    <!-- long wavy black hair back -->
+    <g class="hair-sway">
+      <path d="M20 22 Q14 38 12 60 Q14 70 18 65 Q20 50 21 30 Z" fill="#111"/>
+      <path d="M44 22 Q50 38 52 60 Q50 70 46 65 Q44 50 43 30 Z" fill="#111"/>
+      <path d="M12 60 Q9 72 13 82 Q17 88 19 78 Q15 68 16 58 Z" fill="#0e0e0e"/>
+      <path d="M52 60 Q55 72 51 82 Q47 88 45 78 Q49 68 48 58 Z" fill="#0e0e0e"/>
+      <!-- top hair mass -->
+      <path d="M20 24 Q22 10 32 8 Q42 10 44 24 Q38 16 32 15 Q26 16 20 24 Z" fill="#111"/>
+      <!-- face-framing layers -->
+      <path d="M20 26 Q15 34 16 46 Q19 54 22 46 Q20 36 21 28 Z" fill="#111"/>
+      <path d="M44 26 Q49 34 48 46 Q45 54 42 46 Q44 36 43 28 Z" fill="#111"/>
+      <!-- wavy side strands falling loose -->
+      <path d="M16 44 Q12 54 14 66 Q17 74 20 66 Q18 56 18 46 Z" fill="#0d0d0d"/>
+      <path d="M48 44 Q52 54 50 66 Q47 74 44 66 Q46 56 46 46 Z" fill="#0d0d0d"/>
+      <!-- parted center bangs sweeping to sides -->
+      <path d="M20 24 Q18 30 19 38 Q22 44 25 36 Q23 28 24 22 Z" fill="#111"/>
+      <path d="M44 24 Q46 30 45 38 Q42 44 39 36 Q41 28 40 22 Z" fill="#111"/>
+      <!-- center loose strand -->
+      <path d="M29 15 Q27 22 28 30 Q30 36 32 30 Q30 22 31 14 Z" fill="#111" opacity="0.8"/>
+    </g>
+    <!-- eyes -->
+    <ellipse cx="27" cy="26" rx="3.5" ry="3" fill="white"/>
+    <ellipse cx="37" cy="26" rx="3.5" ry="3" fill="white"/>
+    <circle cx="27" cy="27" r="2.2" fill="#1a0a0a"/>
+    <circle cx="37" cy="27" r="2.2" fill="#1a0a0a"/>
+    <circle cx="28" cy="26" r=".8" fill="white"/>
+    <circle cx="38" cy="26" r=".8" fill="white"/>
+    <!-- blink layer -->
+    <g class="eye-blink">
+      <ellipse cx="27" cy="26" rx="3.5" ry="3" fill="#f0d8c8" style="transform-origin:27px 22px"/>
+      <ellipse cx="37" cy="26" rx="3.5" ry="3" fill="#f0d8c8" style="transform-origin:37px 22px"/>
+    </g>
+    <!-- lashes -->
+    <path d="M23.5 23.5 Q25.5 21.5 27 23" stroke="#111" stroke-width=".8" stroke-linecap="round" fill="none"/>
+    <path d="M27 23 Q29.5 21.5 30.5 23.5" stroke="#111" stroke-width=".8" stroke-linecap="round" fill="none"/>
+    <path d="M33.5 23.5 Q35.5 21.5 37 23" stroke="#111" stroke-width=".8" stroke-linecap="round" fill="none"/>
+    <path d="M37 23 Q39.5 21.5 40.5 23.5" stroke="#111" stroke-width=".8" stroke-linecap="round" fill="none"/>
+    <!-- blush -->
+    <ellipse cx="23" cy="30" rx="3.5" ry="2" fill="rgba(220,120,140,0.3)"/>
+    <ellipse cx="41" cy="30" rx="3.5" ry="2" fill="rgba(220,120,140,0.3)"/>
+    <!-- nose -->
+    <path d="M30 32 Q32 35 34 32" stroke="#c09070" stroke-width=".8" stroke-linecap="round" fill="none"/>
+    <!-- mouth -->
+    <path d="M28 37 Q32 41 36 37" stroke="#c06050" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+    <!-- sparkles -->
+    <text x="2" y="18" font-size="7" fill="#d4b8ff" class="sparkle-anim">✦</text>
+    <text x="54" y="22" font-size="5" fill="#a78bfa" style="animation:sparkle 3s .5s ease-in-out infinite">✦</text>
+  </svg>
+
+  <div class="header-info">
+    <h1>Falak</h1>
+    <div class="sub">Psychology Graduate · Researcher · Mentor · Leader</div>
+    <div class="header-badges">
+      <span class="hbadge">🎓 Michigan State University</span>
+      <span class="hbadge">📍 East Lansing, MI</span>
+      <span class="hbadge gpa-hbadge">✨ GPA 3.9 / 4.0</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+  <div class="resume-grid">
+
+    <!-- ABOUT + LANGUAGES (left col) -->
+    <div>
+      <div class="section-label">About</div>
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-body" style="font-size:.85rem; line-height:1.85; color:#d0c0f0;">
+          Psychology graduate at MSU passionate about research, mentorship, and inclusive communities. With a 3.9 GPA and hands-on experience across research labs, NASA, and student wellness — I thrive where science meets human connection.
+        </div>
+      </div>
+
+      <div class="section-label">Education</div>
+      <div class="edu-card" style="margin-bottom:12px;">
+        <div class="edu-logo">🏛️</div>
+        <div class="edu-info">
+          <h3>Michigan State University</h3>
+          <p>B.S. Psychology · Minors: Human Behavior & Social Services, Business · May 2026</p>
+          <span class="gpa-badge">⭐ GPA 3.9 / 4.0</span>
+        </div>
+      </div>
+
+      <div class="section-label">Languages</div>
+      <div class="card">
+        <div class="lang-row">
+          <span class="lang-label">Hindi</span>
+          <div class="lang-bar-bg"><div class="lang-bar-fill" data-width="100%"></div></div>
+          <span class="lang-tag">Native</span>
+        </div>
+        <div class="lang-row">
+          <span class="lang-label">Urdu</span>
+          <div class="lang-bar-bg"><div class="lang-bar-fill" data-width="100%"></div></div>
+          <span class="lang-tag">Native</span>
+        </div>
+        <div class="lang-row" style="margin-bottom:0">
+          <span class="lang-label">English</span>
+          <div class="lang-bar-bg"><div class="lang-bar-fill" data-width="95%"></div></div>
+          <span class="lang-tag">Fluent</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT + SKILLS (right col) -->
+    <div>
+      <div class="section-label">Contact</div>
+      <div class="contact-grid" style="grid-template-columns:1fr; margin-bottom:12px;">
+        <div class="contact-card">
+          <div class="contact-icon">📧</div>
+          <div class="contact-text">
+            <div class="label">Email</div>
+            <div class="val">fnufalak@msu.edu</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📱</div>
+          <div class="contact-text">
+            <div class="label">Phone</div>
+            <div class="val">(517) 302-7784</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">💼</div>
+          <div class="contact-text">
+            <div class="label">LinkedIn</div>
+            <div class="val" style="font-size:.75rem;">linkedin.com/in/falak-fnu-a3b29324a</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">Skills</div>
+      <div class="skills-grid" style="margin-bottom:10px;">
+        <div class="skill-pill">SPSS</div>
+        <div class="skill-pill">R Programming</div>
+        <div class="skill-pill">Excel</div>
+        <div class="skill-pill">Audacity</div>
+        <div class="skill-pill">JSTOR/Scopus</div>
+        <div class="skill-pill">Data Analysis</div>
+        <div class="skill-pill">Research Methods</div>
+        <div class="skill-pill">EBSCO</div>
+        <div class="skill-pill">Public Speaking</div>
+        <div class="skill-pill">Leadership</div>
+        <div class="skill-pill">Event Org.</div>
+        <div class="skill-pill">Peer Support</div>
+      </div>
+    </div>
+
+    <!-- EXPERIENCE (full width) -->
+    <div class="full-width">
+      <div class="section-label">Experience</div>
+      <div class="exp-cols">
+        <div class="card">
+          <div class="card-title">Research Assistant — TAP Lab</div>
+          <div class="card-sub">Timing, Attention & Perception · Nov 2025–Present</div>
+          <ul class="card-body">
+            <li>Recruitment, data collection & statistical analysis</li>
+            <li>Presented experimental findings to academic audiences</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">English Language Tutor</div>
+          <div class="card-sub">BRIDGES Program, MSU · Oct 2025–Present</div>
+          <ul class="card-body">
+            <li>Tutors non-native speakers in communication & comprehension</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Research Assistant Intern</div>
+          <div class="card-sub">DCS GPS Lab (Remote) · Jun–Aug 2025</div>
+          <ul class="card-body">
+            <li>Literature reviews using JSTOR, Scopus, EBSCO</li>
+            <li>Analyzed 35+ articles on emotion & job search success</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Physical Activity Mentor</div>
+          <div class="card-sub">SpartanFit, MSU · Jan 2025–Present</div>
+          <ul class="card-body">
+            <li>Mentored students in fitness goal-setting</li>
+            <li>Promoted campus wellness & healthy lifestyle habits</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Resident Assistant</div>
+          <div class="card-sub">Housing Services, MSU · Aug 2024–Present</div>
+          <ul class="card-body">
+            <li>Facilitated inclusive living via duty rounds & events</li>
+            <li>Peer support for safety, wellbeing & engagement</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Research Assistant — Psychology</div>
+          <div class="card-sub">ARI Project · Feb–May 2025</div>
+          <ul class="card-body">
+            <li>Transcribed & analyzed audio data using Audacity & Excel</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Undergraduate Assistant — PSY 295</div>
+          <div class="card-sub">Data Analysis in Psych Research · Jan–May 2025</div>
+          <ul class="card-body">
+            <li>Grading, proctoring & RCPD student accommodations</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color:rgba(155,107,232,0.5);">
+          <div class="card-title">🚀 Maintenance Specialist — NASA HERA</div>
+          <div class="card-sub">MSU × NASA · May–Aug 2024</div>
+          <ul class="card-body">
+            <li>Communicated with HERA crew for Mission to Mars (Project FUSION)</li>
+            <li>Authorized cross-dept budget communication requirements</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATIONS (left) -->
+    <div>
+      <div class="section-label">Certifications</div>
+      <div class="card">
+        <span class="chip">Human Research Protection (2025)</span>
+        <span class="chip">Ethics & Regulations in Human Research</span>
+        <span class="chip">MSU CITI RCR Program</span>
+        <span class="chip">Secrets of Psychology – Udemy</span>
+        <span class="chip">Stress & Anxiety Management – Udemy</span>
+        <span class="chip">I/O Psychology & HRM – Udemy</span>
+        <span class="chip">Event Management – MyCaptain</span>
+        <span class="chip">Excellence in Academics (2022)</span>
+      </div>
+    </div>
+
+    <!-- ACTIVITIES (right) -->
+    <div>
+      <div class="section-label">Clubs & Activities</div>
+      <div class="card">
+        <span class="chip">🚀 Founding Growth Strategist – SheVinci App</span>
+        <span class="chip">🌸 Event Coordinator – Brown Girl Health Club, MSU</span>
+        <span class="chip">🌍 Model United Nations (MUN)</span>
+        <span class="chip">🌱 Environment Club</span>
+        <span class="chip">📚 Literature Club</span>
+        <span class="chip">🎭 Drama Club</span>
+        <span class="chip">🗣️ Debate Club (English & Hindi prizes)</span>
+        <span class="chip">💛 Inner Wheel Club – Volunteering</span>
+        <span class="chip">🏆 Hult Entrepreneurship Competition (Apr 2026)</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div style="text-align:center; padding:20px; font-size:.75rem; color:rgba(155,107,232,0.4);">Made with 💜 · Falak's Visual Resume</div>
+
+<script>
+  // Stars
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${Math.random()*4}s;animation-duration:${2+Math.random()*3}s;`;
+    starsEl.appendChild(s);
+  }
+
+  // Animate language bars on load
+  function animateLangBars() {
+    document.querySelectorAll('.lang-bar-fill').forEach(b => {
+      const w = b.dataset.width;
+      b.style.width = '0%';
+      setTimeout(() => { b.style.width = w; }, 200);
+    });
+  }
+  animateLangBars();
+
+  // Scroll-reveal cards
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.card, .edu-card, .contact-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity .4s ease, transform .4s ease, border-color .25s';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
