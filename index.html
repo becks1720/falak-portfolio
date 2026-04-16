@@ -42,9 +42,20 @@
   }
 
   .char-mini {
-    width: 64px;
-    height: 88px;
+    width: 108px;
+    height: 152px;
     flex-shrink: 0;
+    filter: drop-shadow(0 10px 18px rgba(0,0,0,0.28));
+  }
+
+  @media(max-width: 700px) {
+    .top-bar {
+      align-items: flex-start;
+    }
+    .char-mini {
+      width: 86px;
+      height: 120px;
+    }
   }
 
   .header-info { flex: 1; }
@@ -296,8 +307,9 @@
   <svg class="char-mini char-float-mini" viewBox="0 0 64 92" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <radialGradient id="fG" cx="50%" cy="35%" r="60%">
-        <stop offset="0%" stop-color="#f0d8c8"/>
-        <stop offset="100%" stop-color="#ddb898"/>
+        <stop offset="0%" stop-color="#f4dfcf"/>
+        <stop offset="60%" stop-color="#e7c2a5"/>
+        <stop offset="100%" stop-color="#d7a98a"/>
       </radialGradient>
       <linearGradient id="hairShine" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stop-color="#242033"/>
@@ -308,65 +320,77 @@
         <stop offset="0%" stop-color="#f7f7fb"/>
         <stop offset="100%" stop-color="#d7d9e7"/>
       </linearGradient>
+      <radialGradient id="cheekGlow" cx="50%" cy="50%" r="55%">
+        <stop offset="0%" stop-color="rgba(224, 140, 150, 0.42)"/>
+        <stop offset="100%" stop-color="rgba(224, 140, 150, 0)"/>
+      </radialGradient>
+      <radialGradient id="iris" cx="35%" cy="35%" r="70%">
+        <stop offset="0%" stop-color="#4d342f"/>
+        <stop offset="100%" stop-color="#140c0d"/>
+      </radialGradient>
     </defs>
     <!-- body -->
-    <path d="M22 47 Q32 43 42 47 L43 67 Q32 72 21 67 Z" fill="url(#shirtShade)"/>
-    <path d="M28 46 Q32 53 36 46" fill="none" stroke="#c7cad8" stroke-width="1"/>
-    <path d="M25 47 L32 56 L39 47" fill="none" stroke="#e5dff2" stroke-width="1.2" stroke-linecap="round"/>
-    <path d="M21 64 Q18 80 17 90 Q32 94 47 90 Q46 80 43 64 Z" fill="#c9cad6"/>
-    <path d="M24 68 Q32 72 40 68" fill="none" stroke="#b2b6c8" stroke-width="1"/>
+    <path d="M21 48 Q31 43 43 48 L44 69 Q32 75 20 69 Z" fill="url(#shirtShade)"/>
+    <path d="M27.5 47 Q32 54 36.5 47" fill="none" stroke="#c7cad8" stroke-width="1"/>
+    <path d="M25 48 L32 57 L39 48" fill="none" stroke="#ece7f6" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M20 66 Q18 80 16 92 Q32 97 48 92 Q46 80 44 66 Z" fill="#c5c8d3"/>
+    <path d="M24 69 Q32 74 40 69" fill="none" stroke="#aeb3c4" stroke-width="1"/>
     <!-- left arm -->
-    <path d="M22 52 Q15 60 12 68" stroke="#ddb898" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M21 53 Q15 61 12 69" stroke="#ddb898" stroke-width="4" stroke-linecap="round" fill="none"/>
     <!-- right arm waving -->
     <g class="arm-wave">
-      <path d="M42 52 Q49 46 54 40" stroke="#ddb898" stroke-width="4" stroke-linecap="round" fill="none"/>
-      <circle cx="55.5" cy="38.5" r="1.8" fill="#ddb898"/>
+      <path d="M43 53 Q49 46 55 39" stroke="#ddb898" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <circle cx="56.2" cy="37.8" r="1.9" fill="#ddb898"/>
     </g>
     <g class="char-head">
       <!-- neck -->
-      <rect x="29" y="37" width="6" height="8" rx="3" fill="#e4c0a0"/>
+      <rect x="29" y="38" width="6" height="9" rx="3" fill="#e2bb9a"/>
       <!-- long wavy black hair back -->
       <g class="hair-sway">
-        <path d="M20 22 Q14 38 12 60 Q14 70 18 65 Q20 50 21 30 Z" fill="url(#hairShine)"/>
-        <path d="M44 22 Q50 38 52 60 Q50 70 46 65 Q44 50 43 30 Z" fill="url(#hairShine)"/>
-        <path d="M12 60 Q9 72 13 82 Q17 88 19 78 Q15 68 16 58 Z" fill="#09090c"/>
-        <path d="M52 60 Q55 72 51 82 Q47 88 45 78 Q49 68 48 58 Z" fill="#09090c"/>
+        <path d="M19 21 Q12 38 11 62 Q13 75 18 69 Q20 51 21 29 Z" fill="url(#hairShine)"/>
+        <path d="M45 21 Q52 38 53 62 Q51 75 46 69 Q44 51 43 29 Z" fill="url(#hairShine)"/>
+        <path d="M11 61 Q8 75 12 86 Q16 92 19 80 Q14 69 15 58 Z" fill="#09090c"/>
+        <path d="M53 61 Q56 75 52 86 Q48 92 45 80 Q50 69 49 58 Z" fill="#09090c"/>
       </g>
       <!-- face -->
-      <ellipse cx="32" cy="26" rx="12" ry="13" fill="url(#fG)"/>
+      <path d="M32 13 Q41 13 44.5 22 Q45.8 31 42 37.5 Q38 43 32 43 Q26 43 22 37.5 Q18.2 31 19.5 22 Q23 13 32 13 Z" fill="url(#fG)"/>
+      <path d="M24 31 Q32 36 40 31" fill="none" stroke="rgba(180,120,96,0.18)" stroke-width="1"/>
       <!-- hair top and front -->
       <g class="front-hair-sway">
-        <path d="M20 24 Q22 10 32 8 Q42 10 44 24 Q38 16 32 15 Q26 16 20 24 Z" fill="url(#hairShine)"/>
-        <path d="M20 26 Q15 34 16 46 Q19 54 22 46 Q20 36 21 28 Z" fill="#111"/>
-        <path d="M44 26 Q49 34 48 46 Q45 54 42 46 Q44 36 43 28 Z" fill="#111"/>
-        <path d="M20 24 Q18 30 19 38 Q22 44 25 36 Q23 28 24 22 Z" fill="#111"/>
-        <path d="M44 24 Q46 30 45 38 Q42 44 39 36 Q41 28 40 22 Z" fill="#111"/>
-        <path d="M29 15 Q27 22 28 30 Q30 36 32 30 Q30 22 31 14 Z" fill="#111" opacity="0.8"/>
+        <path d="M19 24 Q20 9 32 8 Q44 9 45 24 Q39 14 32 14 Q25 14 19 24 Z" fill="url(#hairShine)"/>
+        <path d="M20 25 Q15 34 16 46 Q19 54 22 47 Q20 36 21 27 Z" fill="#111"/>
+        <path d="M44 25 Q49 34 48 46 Q45 54 42 47 Q44 36 43 27 Z" fill="#111"/>
+        <path d="M21 23 Q19 30 21 39 Q24 43 26 35 Q24 27 25 21 Z" fill="#111"/>
+        <path d="M43 23 Q45 30 43 39 Q40 43 38 35 Q40 27 39 21 Z" fill="#111"/>
+        <path d="M30 14 Q28 22 29 31 Q30 35 32 33 Q34 35 35 31 Q36 22 34 14 Z" fill="#111" opacity="0.85"/>
       </g>
+      <path d="M24 20 Q32 17 40 20" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
       <!-- eyes -->
-      <ellipse cx="27" cy="26" rx="3.5" ry="3" fill="white"/>
-      <ellipse cx="37" cy="26" rx="3.5" ry="3" fill="white"/>
-      <circle cx="27" cy="27" r="2.2" fill="#1a0a0a"/>
-      <circle cx="37" cy="27" r="2.2" fill="#1a0a0a"/>
-      <circle cx="28" cy="26" r=".8" fill="white"/>
-      <circle cx="38" cy="26" r=".8" fill="white"/>
+      <ellipse cx="27" cy="27" rx="3.8" ry="2.9" fill="#fffdfd"/>
+      <ellipse cx="37" cy="27" rx="3.8" ry="2.9" fill="#fffdfd"/>
+      <circle cx="27" cy="27.5" r="2.15" fill="url(#iris)"/>
+      <circle cx="37" cy="27.5" r="2.15" fill="url(#iris)"/>
+      <circle cx="27.8" cy="26.6" r=".72" fill="white"/>
+      <circle cx="37.8" cy="26.6" r=".72" fill="white"/>
       <!-- blink layer -->
       <g class="eye-blink">
-        <ellipse cx="27" cy="26" rx="3.5" ry="3" fill="#f0d8c8" style="transform-origin:27px 22px"/>
-        <ellipse cx="37" cy="26" rx="3.5" ry="3" fill="#f0d8c8" style="transform-origin:37px 22px"/>
+        <ellipse cx="27" cy="27" rx="3.8" ry="2.9" fill="#efccb5" style="transform-origin:27px 27px"/>
+        <ellipse cx="37" cy="27" rx="3.8" ry="2.9" fill="#efccb5" style="transform-origin:37px 27px"/>
       </g>
       <!-- lashes -->
-      <path d="M23.5 23.5 Q25.5 21.5 27 23" stroke="#111" stroke-width=".8" stroke-linecap="round" fill="none"/>
-      <path d="M27 23 Q29.5 21.5 30.5 23.5" stroke="#111" stroke-width=".8" stroke-linecap="round" fill="none"/>
-      <path d="M33.5 23.5 Q35.5 21.5 37 23" stroke="#111" stroke-width=".8" stroke-linecap="round" fill="none"/>
-      <path d="M37 23 Q39.5 21.5 40.5 23.5" stroke="#111" stroke-width=".8" stroke-linecap="round" fill="none"/>
+      <path d="M23.2 24.2 Q27 21.8 30.4 24.2" stroke="#171219" stroke-width=".95" stroke-linecap="round" fill="none"/>
+      <path d="M33.6 24.2 Q37 21.8 40.8 24.2" stroke="#171219" stroke-width=".95" stroke-linecap="round" fill="none"/>
+      <path d="M24.1 24.1 L23 23.1" stroke="#171219" stroke-width=".55" stroke-linecap="round"/>
+      <path d="M39.9 24.1 L41 23.1" stroke="#171219" stroke-width=".55" stroke-linecap="round"/>
       <!-- blush -->
-      <ellipse cx="23" cy="30" rx="3.5" ry="2" fill="rgba(220,120,140,0.3)"/>
-      <ellipse cx="41" cy="30" rx="3.5" ry="2" fill="rgba(220,120,140,0.3)"/>
+      <ellipse cx="23.5" cy="31.5" rx="4.2" ry="2.5" fill="url(#cheekGlow)"/>
+      <ellipse cx="40.5" cy="31.5" rx="4.2" ry="2.5" fill="url(#cheekGlow)"/>
       <!-- nose -->
-      <path d="M30 32 Q32 35 34 32" stroke="#c09070" stroke-width=".8" stroke-linecap="round" fill="none"/>
+      <path d="M31 30 Q32.3 34 30.7 35.2" stroke="#bf8d6d" stroke-width=".85" stroke-linecap="round" fill="none"/>
+      <path d="M30.7 35.2 Q32 36 33.4 34.8" stroke="#c69472" stroke-width=".7" stroke-linecap="round" fill="none"/>
       <!-- mouth -->
-      <path d="M28 37 Q32 41 36 37" stroke="#c06050" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+      <path d="M28.2 38.3 Q32 40.4 35.8 38.3" stroke="#a95752" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+      <path d="M29 39.1 Q32 41 35 39.1" stroke="rgba(255,210,210,0.35)" stroke-width=".45" stroke-linecap="round" fill="none"/>
     </g>
     <!-- sparkles -->
     <text x="2" y="18" font-size="7" fill="#d4b8ff" class="sparkle-anim">✦</text>
