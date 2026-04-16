@@ -7,16 +7,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #07111f;
-    --surface: #100f1e;
-    --card: rgba(22,20,40,0.85);
-    --border: rgba(180,160,220,0.18);
-    --accent: #9b7fe8;
-    --accent2: #c4a8f0;
-    --accent3: #6c4ab8;
-    --text: #e8e0f8;
-    --muted: #9080b8;
-    --soft: rgba(155,127,232,0.12);
+    --bg: #0d1424;
+    --surface: #171a2f;
+    --card: rgba(25, 27, 46, 0.8);
+    --border: rgba(221, 202, 255, 0.2);
+    --accent: #cda3ff;
+    --accent2: #f2ddff;
+    --accent3: #7e6ec9;
+    --text: #f4ecff;
+    --muted: #bda9df;
+    --soft: rgba(208, 174, 255, 0.14);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
 
@@ -26,22 +26,45 @@
       radial-gradient(circle at top left, rgba(80, 126, 225, 0.26), transparent 34%),
       radial-gradient(circle at top right, rgba(39, 91, 187, 0.18), transparent 28%),
       linear-gradient(160deg, #07111f 0%, #0c1930 42%, #14152a 100%);
+    background-size: 140% 140%, 140% 140%, 180% 180%;
+    animation: skyShift 16s ease-in-out infinite alternate;
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath fill='%23f4ecff' d='M14 2l1.7 4.8L21 8.5l-3.7 3 1.2 4.7L14 13.8l-4.5 2.4 1.2-4.7-3.7-3 5.3-1.7z'/%3E%3C/svg%3E") 14 14, auto;
+  }
+  a, button, .card, .chip, .skill-pill, .contact-card {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='7' fill='%23cda3ff'/%3E%3Ccircle cx='15' cy='15' r='3.3' fill='%23fff4ff'/%3E%3C/svg%3E") 15 15, pointer;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.06;
+    background-image: radial-gradient(rgba(255,255,255,0.8) 0.45px, transparent 0.45px);
+    background-size: 3px 3px;
+  }
+  @keyframes skyShift {
+    0% { background-position: 0% 0%, 100% 0%, 0% 0%; }
+    100% { background-position: 12% 8%, 86% 12%, 100% 100%; }
   }
 
   /* ===== TOP HEADER ===== */
   .top-bar {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
     gap: 18px;
     padding: 24px 28px;
-    background: linear-gradient(90deg, rgba(9,22,46,0.95), rgba(22,20,48,0.92));
+    background: linear-gradient(90deg, rgba(18, 24, 49, 0.86), rgba(33, 22, 54, 0.82));
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
     z-index: 10;
+    backdrop-filter: blur(10px);
   }
 
   .header-info { flex: 1; }
@@ -72,12 +95,44 @@
     background: rgba(155,127,232,0.15);
     border: 1px solid rgba(155,127,232,0.3);
     color: var(--accent2);
+    transition: transform .2s ease, background .2s ease;
   }
+  .hbadge:hover { transform: translateY(-1px); background: rgba(205,163,255,0.22); }
   .gpa-hbadge {
-    background: linear-gradient(135deg,#5a28b8,#9b6be8);
+    background: linear-gradient(135deg,#7d54d6,#c08cff);
     border: none;
     color: white;
     font-weight: 600;
+  }
+  .avatar-panel {
+    background: linear-gradient(135deg, rgba(205,163,255,0.28), rgba(42, 52, 78, 0.55));
+    border: 1px solid rgba(238, 221, 255, 0.35);
+    border-radius: 16px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 34px rgba(52, 30, 93, 0.32);
+    animation: floaty 4.2s ease-in-out infinite;
+  }
+  .avatar-photo {
+    width: 90px;
+    height: 90px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 245, 255, 0.4);
+    box-shadow: 0 8px 20px rgba(24, 18, 46, 0.45);
+  }
+  .avatar-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    image-orientation: from-image;
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
   }
   @media(max-width: 760px) {
     .top-bar {
@@ -85,6 +140,10 @@
     }
     .header-info h1 {
       font-size: 2rem;
+    }
+    .avatar-panel {
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 
@@ -116,7 +175,8 @@
     margin-bottom: 12px;
     position: relative;
     overflow: hidden;
-    transition: border-color .25s, transform .2s;
+    backdrop-filter: blur(7px);
+    transition: border-color .25s, box-shadow .3s, transform .15s;
   }
   .card::before {
     content: '';
@@ -125,12 +185,24 @@
     background: linear-gradient(180deg,#9b6be8,#4a1fa8);
     border-radius: 3px 0 0 3px;
   }
-  .card:hover { border-color: rgba(155,107,232,0.4); transform: translateY(-2px); }
+  .card:hover { border-color: rgba(155,107,232,0.5); box-shadow: 0 12px 28px rgba(32, 20, 62, 0.45); }
   .card-title { font-weight: 600; font-size: .95rem; color: #e8d8ff; margin-bottom: 3px; }
   .card-sub { font-size: .78rem; color: var(--accent); margin-bottom: 8px; font-weight: 500; }
   .card-body { font-size: .82rem; color: #b8a8d8; line-height: 1.75; }
   .card-body li { list-style:none; padding-left:14px; position:relative; margin-bottom:3px; }
   .card-body li::before { content:'◆'; position:absolute; left:0; color:#7c3aed; font-size:6px; top:5px; }
+  .project-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: .8rem;
+    color: #efe7ff;
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(239,231,255,0.75);
+  }
+  .project-link:hover {
+    color: #ffffff;
+    border-bottom-color: #ffffff;
+  }
 
   .section-label {
     font-family: 'Cormorant Garamond', serif;
@@ -153,7 +225,6 @@
   /* CONTACT */
   .contact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 12px;
     margin-bottom: 16px;
   }
@@ -269,6 +340,29 @@
   .stars-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
   .star { position:absolute; border-radius:50%; background:rgba(255,255,255,0.7); animation:twinkle 3s infinite; }
   @keyframes twinkle { 0%,100%{opacity:.2;transform:scale(1)} 50%{opacity:.9;transform:scale(1.4)} }
+  .aurora-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .aurora {
+    position: absolute;
+    width: 44vmax;
+    height: 44vmax;
+    border-radius: 50%;
+    filter: blur(55px);
+    opacity: 0.18;
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  .aurora.one { left: -8%; top: -12%; background: #6a8dff; }
+  .aurora.two { right: -10%; top: 12%; background: #d488ff; animation-delay: -6s; }
+  .aurora.three { left: 28%; bottom: -24%; background: #76d0ff; animation-delay: -10s; }
+  @keyframes drift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(12px, -18px) scale(1.12); }
+  }
 
   @keyframes sparkle { 0%,100%{opacity:.3;transform:scale(0.8) rotate(0deg)} 50%{opacity:1;transform:scale(1.2) rotate(20deg)} }
   .sparkle-anim { animation: sparkle 2.5s ease-in-out infinite; }
@@ -280,16 +374,26 @@
 <body>
 
 <div class="stars-bg" id="stars"></div>
+<div class="aurora-bg" aria-hidden="true">
+  <div class="aurora one"></div>
+  <div class="aurora two"></div>
+  <div class="aurora three"></div>
+</div>
 
 <!-- TOP HEADER -->
 <div class="top-bar">
   <div class="header-info">
     <h1>Fnu Falak</h1>
-    <div class="sub">Psychology Graduate · Researcher · Mentor · Leader</div>
+    <div class="sub">Preferred Name: Falak · Psychology Graduate · Researcher</div>
     <div class="header-badges">
       <span class="hbadge">🎓 Michigan State University</span>
       <span class="hbadge">📍 East Lansing, MI</span>
       <span class="hbadge gpa-hbadge">✨ GPA 3.9 / 4.0</span>
+    </div>
+  </div>
+  <div class="avatar-panel" aria-label="Portrait photo">
+    <div class="avatar-photo">
+      <img src="IMG_1341.jpg" alt="Portrait photo">
     </div>
   </div>
 </div>
@@ -303,7 +407,7 @@
       <div class="section-label">About</div>
       <div class="card" style="margin-bottom:12px;">
         <div class="card-body" style="font-size:.85rem; line-height:1.85; color:#d0c0f0;">
-          Psychology graduate at MSU passionate about research, mentorship, and inclusive communities. With a 3.9 GPA and hands-on experience across research labs, NASA, and student wellness — I thrive where science meets human connection.
+          Graduated with Highest Honors from Michigan State University's College of Social Science with hands-on experience in behavioral research, data analysis, and community engagement. Skilled in SPSS, R, and Excel with contributions to NASA, the U.S. Army Research Institute, and multiple university research labs. Seeking a research, HR, or social services role where data-driven insight meets human impact.
         </div>
       </div>
 
@@ -313,7 +417,8 @@
         <div class="edu-info">
           <h3>Michigan State University</h3>
           <p>B.S. Psychology · Minors: Human Behavior & Social Services, Business · May 2026</p>
-          <span class="gpa-badge">⭐ GPA 3.9 / 4.0</span>
+          <p>Dean's List every semester (Spring 2023–Spring 2026)</p>
+          <span class="gpa-badge">⭐ GPA 3.9 / 4.0 · Highest Honors</span>
         </div>
       </div>
 
@@ -359,7 +464,7 @@
           <div class="contact-icon">💼</div>
           <div class="contact-text">
             <div class="label">LinkedIn</div>
-            <div class="val" style="font-size:.75rem;"><a href="https://www.linkedin.com/in/falak-fnu-a3b29324a" target="_blank" rel="noopener noreferrer">linkedin.com/in/falak-fnu-a3b29324a</a></div>
+            <div class="val" style="font-size:.75rem;"><a href="https://www.linkedin.com/in/fnufalak" target="_blank" rel="noopener noreferrer">linkedin.com/in/fnufalak</a></div>
           </div>
         </div>
       </div>
@@ -374,10 +479,12 @@
         <div class="skill-pill">Data Analysis</div>
         <div class="skill-pill">Research Methods</div>
         <div class="skill-pill">EBSCO</div>
-        <div class="skill-pill">Public Speaking</div>
-        <div class="skill-pill">Leadership</div>
-        <div class="skill-pill">Event Org.</div>
-        <div class="skill-pill">Peer Support</div>
+        <div class="skill-pill">Word</div>
+        <div class="skill-pill">Canva</div>
+        <div class="skill-pill">PowerPoint</div>
+        <div class="skill-pill">VS Code</div>
+        <div class="skill-pill">GitHub</div>
+        <div class="skill-pill">Render</div>
       </div>
     </div>
 
@@ -387,64 +494,76 @@
       <div class="exp-cols">
         <div class="card">
           <div class="card-title">Research Assistant — TAP Lab</div>
-          <div class="card-sub">Timing, Attention & Perception · Nov 2025–Present</div>
+          <div class="card-sub">Timing, Attention & Perception (MSU) · Nov 2025–Jan 2026</div>
           <ul class="card-body">
-            <li>Recruitment, data collection & statistical analysis</li>
-            <li>Presented experimental findings to academic audiences</li>
+            <li>Recruited participants and collected data for a sound perception study on minimum time intervals for distinct tone perception</li>
+            <li>Presented experimental findings to lab members and academic audiences</li>
           </ul>
         </div>
         <div class="card">
           <div class="card-title">English Language Tutor</div>
-          <div class="card-sub">BRIDGES Program, MSU · Oct 2025–Present</div>
+          <div class="card-sub">BRIDGES Program, MSU · Oct 2025–Apr 2026</div>
           <ul class="card-body">
-            <li>Tutors non-native speakers in communication & comprehension</li>
+            <li>Delivered one-on-one tutoring to non-native speakers, improving reading, writing, and verbal communication</li>
           </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Research Project — Social Media & College Students</div>
+          <div class="card-sub">PSY 493, MSU · Aug–Dec 2025</div>
+          <ul class="card-body">
+            <li>Designed and conducted original research using Qualtrics and SONA for participant recruitment and data collection</li>
+            <li>Performed end-to-end SPSS analysis including regression and ANOVA; produced a formal paper and presented findings</li>
+          </ul>
+          <a class="project-link" href="Social%20Media%20Survey%20Research%20Project%20Report.pdf" target="_blank" rel="noopener noreferrer">View Social Media Survey Research Project Report (PDF)</a>
         </div>
         <div class="card">
           <div class="card-title">Research Assistant Intern</div>
           <div class="card-sub">DCS GPS Lab (Remote) · Jun–Aug 2025</div>
           <ul class="card-body">
-            <li>Literature reviews using JSTOR, Scopus, EBSCO</li>
-            <li>Analyzed 35+ articles on emotion & job search success</li>
+            <li>Reviewed and analyzed 35+ peer-reviewed articles via JSTOR, Scopus, and EBSCO on positive emotions and job search success</li>
+            <li>Contributed to literature reviews and prepared research reports supporting behavioral studies</li>
           </ul>
         </div>
         <div class="card">
           <div class="card-title">Physical Activity Mentor</div>
-          <div class="card-sub">SpartanFit, MSU · Jan 2025–Present</div>
+          <div class="card-sub">SpartanFit, MSU · Jan 2025–Apr 2026</div>
           <ul class="card-body">
-            <li>Mentored students in fitness goal-setting</li>
+            <li>Mentored students in setting and achieving fitness goals under the Spartan Active Program</li>
             <li>Promoted campus wellness & healthy lifestyle habits</li>
           </ul>
         </div>
         <div class="card">
           <div class="card-title">Resident Assistant</div>
-          <div class="card-sub">Housing Services, MSU · Aug 2024–Present</div>
+          <div class="card-sub">Resident Education & Housing Services, MSU · Aug 2024–Apr 2026</div>
           <ul class="card-body">
-            <li>Facilitated inclusive living via duty rounds & events</li>
-            <li>Peer support for safety, wellbeing & engagement</li>
+            <li>Supported a community of 40+ students through programming, duty rounds, and peer crisis support</li>
+            <li>Fostered an inclusive and safe living environment</li>
           </ul>
         </div>
         <div class="card">
           <div class="card-title">Research Assistant — Psychology</div>
-          <div class="card-sub">ARI Project · Feb–May 2025</div>
+          <div class="card-sub">Army Research Institute Project, MSU · Feb–May 2025</div>
           <ul class="card-body">
-            <li>Transcribed & analyzed audio data using Audacity & Excel</li>
+            <li>Transcribed and coded 50+ audio recordings using Audacity and organized findings in Excel</li>
+            <li>Maintained data accuracy and research integrity for ARI-funded work</li>
           </ul>
         </div>
         <div class="card">
-          <div class="card-title">Undergraduate Assistant — PSY 295</div>
+          <div class="card-title">Undergraduate Teaching Assistant — PSY 295</div>
           <div class="card-sub">Data Analysis in Psych Research · Jan–May 2025</div>
           <ul class="card-body">
-            <li>Grading, proctoring & RCPD student accommodations</li>
+            <li>Supported 50+ students through grading, proctoring, and individualized academic support</li>
+            <li>Coordinated RCPD accommodations and provided proctoring and note-taking support</li>
           </ul>
         </div>
         <div class="card" style="border-color:rgba(155,107,232,0.5);">
-          <div class="card-title">🚀 Maintenance Specialist — NASA HERA</div>
+          <div class="card-title">🚀 Mission Control Specialist — NASA HERA</div>
           <div class="card-sub">MSU × NASA · May–Aug 2024</div>
           <ul class="card-body">
-            <li>Communicated with HERA crew for Mission to Mars (Project FUSION)</li>
-            <li>Authorized cross-dept budget communication requirements</li>
+            <li>Served as mission control liaison for NASA's Human Exploration Research Analog (HERA) Mars simulation</li>
+            <li>Managed crew communications and cross-department budget authorization</li>
           </ul>
+                    <a class="project-link" href="Project FUSION Summer 2024 Certificate - Fnu Falak.pdf" target="_blank" rel="noopener noreferrer">View Project FUSION certificate (PDF)</a>
         </div>
       </div>
     </div>
@@ -454,13 +573,11 @@
       <div class="section-label">Certifications</div>
       <div class="card">
         <span class="chip">Human Research Protection (2025)</span>
-        <span class="chip">Ethics & Regulations in Human Research</span>
+        <span class="chip">Ethics in Human Research (2025)</span>
         <span class="chip">MSU CITI RCR Program</span>
-        <span class="chip">Secrets of Psychology – Udemy</span>
+        <span class="chip">I-O Psychology & HRM – Udemy</span>
         <span class="chip">Stress & Anxiety Management – Udemy</span>
-        <span class="chip">I/O Psychology & HRM – Udemy</span>
         <span class="chip">Event Management – MyCaptain</span>
-        <span class="chip">Excellence in Academics (2022)</span>
       </div>
     </div>
 
@@ -468,22 +585,22 @@
     <div>
       <div class="section-label">Clubs & Activities</div>
       <div class="card">
-        <span class="chip">🚀 Founding Growth Strategist – SheVinci App</span>
-        <span class="chip">🌸 Event Coordinator – Brown Girl Health Club, MSU</span>
-        <span class="chip">🌍 Model United Nations (MUN)</span>
-        <span class="chip">🌱 Environment Club</span>
-        <span class="chip">📚 Literature Club</span>
-        <span class="chip">🎭 Drama Club</span>
-        <span class="chip">🗣️ Debate Club (English & Hindi prizes)</span>
-        <span class="chip">💛 Inner Wheel Club – Volunteering</span>
-        <span class="chip">🏆 Hult Entrepreneurship Competition (Apr 2026)</span>
+        <span class="chip">Founding Growth & Marketing Strategist, SheVinci App</span>
+        <span class="chip">Event Coordinator, Brown Girl Health Club</span>
+        <span class="chip">Inner Wheel Club</span>
+        <span class="chip">Model United Nations (MUN)</span>
+        <span class="chip">Debate Club (prizes in English & Hindi)</span>
+        <span class="chip">Drama Club</span>
+        <span class="chip">Environment Club</span>
+        <span class="chip">Literature Club</span>
+        <span class="chip">Award of Academic Excellence – DPS (2022)</span>
       </div>
     </div>
 
   </div>
 </div>
 
-<div style="text-align:center; padding:20px; font-size:.75rem; color:rgba(155,107,232,0.4);">Made with 💜 · Falak's Visual Resume</div>
+<div style="text-align:center; padding:20px; font-size:.75rem; color:rgba(155,107,232,0.4);">Authorized to work in the U.S. on OPT beginning June 30, 2026</div>
 
 <script>
   // Stars
@@ -521,6 +638,26 @@
     el.style.transform = 'translateY(16px)';
     el.style.transition = 'opacity .4s ease, transform .4s ease, border-color .25s';
     observer.observe(el);
+  });
+
+  // Stagger reveal timing for a more dynamic scan effect.
+  document.querySelectorAll('.card, .edu-card, .contact-card').forEach((el, i) => {
+    el.style.transitionDelay = `${Math.min(i * 0.05, 0.3)}s`;
+  });
+
+  // Gentle 3D tilt on cards for an interactive feel.
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rx = ((y / rect.height) - 0.5) * -4;
+      const ry = ((x / rect.width) - 0.5) * 6;
+      card.style.transform = `perspective(850px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(850px) rotateX(0deg) rotateY(0deg)';
+    });
   });
 </script>
 </body>
